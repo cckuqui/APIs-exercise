@@ -1,117 +1,91 @@
-# Python API Homework - What's the Weather Like?
+# Python API Exercise - Weather
 
-## Background
+We all know that if we get closer to the equator the temperature gets higher, but can you prove it? This exercise focuses on it.
 
-Whether financial, political, or social -- data's true power lies in its ability to answer questions definitively. So let's take what you've learned about Python requests, APIs, and JSON traversals to answer a fundamental question: "What's the weather like as we approach the equator?"
+![Image retrived from OpenWeatherMap page](https://openweathermap.org/themes/openweathermap/assets/img/new-history-forecast-bulk.png)
 
-Now, we know what you may be thinking: _"Duh. It gets hotter..."_
+## Data
 
-But, if pressed, how would you **prove** it?
+For this example, I generated random latitudes and longitudes varing from +/-90 case of latitude and +/-180 for longitude. From it, using citypy, I detected the nearest city and generated a city list. This list was use to locate the weather information from the OpenWeatherMap API, to create a representative model of weather across world [cities](Resources/cities.csv).
 
-![Equator](Images/equatorsign.png)
+![Preview of the latest file created](Images/prev_cities.png)
 
-### Before You Begin
+### Objective
 
-1. Create a new repository for this project called `python-api-challenge`. **Do not add this homework to an existing repository**.
+Analize the information retrived with visual help from `matplotlib`.
 
-2. Clone the new repository to your computer.
-
-3. Inside your local git repository, create a directory for both of the  Python Challenges. Use folder names corresponding to the challenges: **WeatherPy**.
-
-4. Inside the folder that you just created, add new files called `WeatherPy.ipynb` and `VacationPy.ipynb`. These will be the main scripts to run for each analysis.
-
-5. Push the above changes to GitHub.
-
-## Part I - WeatherPy
-
-In this example, you'll be creating a Python script to visualize the weather of 500+ cities across the world of varying distance from the equator. To accomplish this, you'll be utilizing a [simple Python library](https://pypi.python.org/pypi/citipy), the [OpenWeatherMap API](https://openweathermap.org/api), and a little common sense to create a representative model of weather across world cities.
-
-Your first objective is to build a series of scatter plots to showcase the following relationships:
-
-* Temperature (F) vs. Latitude
+* Temperature (C) vs. Latitude
 * Humidity (%) vs. Latitude
 * Cloudiness (%) vs. Latitude
 * Wind Speed (mph) vs. Latitude
 
-After each plot add a sentence or too explaining what the code is and analyzing.
+Divide by Hemispheres and review the same information as before, looking for correlation between the data.
 
-Your next objective is to run linear regression on each relationship, only this time separating them into Northern Hemisphere (greater than or equal to 0 degrees latitude) and Southern Hemisphere (less than 0 degrees latitude):
+Create a heatmap with the aid of `gmaps` with the humidity for the cities. Identifing an ideal weather, find the nearest hotel to the cities that have the ideal weather conditions.
+Create an ideal weather and 
 
-* Northern Hemisphere - Temperature (F) vs. Latitude
-* Southern Hemisphere - Temperature (F) vs. Latitude
-* Northern Hemisphere - Humidity (%) vs. Latitude
-* Southern Hemisphere - Humidity (%) vs. Latitude
-* Northern Hemisphere - Cloudiness (%) vs. Latitude
-* Southern Hemisphere - Cloudiness (%) vs. Latitude
-* Northern Hemisphere - Wind Speed (mph) vs. Latitude
-* Southern Hemisphere - Wind Speed (mph) vs. Latitude
+## Results
 
-After each pair of plots explain what the linear regression is modelling such as any relationships you notice and any other analysis you may have.
+* General visualizations
 
-Your final notebook must:
+  * Temperature (C) vs. Latitude
 
-* Randomly select **at least** 500 unique (non-repeat) cities based on latitude and longitude.
-* Perform a weather check on each of the cities using a series of successive API calls.
-* Include a print log of each city as it's being processed with the city number and city name.
-* Save a CSV of all retrieved data and a PNG image for each scatter plot.
+    ![Max Temperature vs. Latitude](Images/max_temp.png)
 
-### Part II - VacationPy
+    In this plot we can see that as we get away from the Equator the max temperature decreses, but we see a more significant decrease in the north of the planet.
 
-Now let's use your skills in working with weather data to plan future vacations. Use jupyter-gmaps and the Google Places API for this part of the assignment.
+  * Humidity (%) vs. Latitude
 
-* **Note:** if you having trouble displaying the maps try running `jupyter nbextension enable --py gmaps` in your environment and retry.
+    ![Humidity vs. Latitude](Images/humidity.png)
 
-* Create a heat map that displays the humidity for every city from the part I of the homework.
+    As far as this chart shows, there is no relation between the latitude and the % humidity.
 
-  ![heatmap](Images/heatmap.png)
+  * Cloudiness (%) vs. Latitude
 
-* Narrow down the DataFrame to find your ideal weather condition. For example:
+    ![Cloudiness vs. Latitude](Images/clouds.png)
 
-  * A max temperature lower than 80 degrees but higher than 70.
+    Again, it appears as it there is no relation between the latitude and the % cloudiness.
 
-  * Wind speed less than 10 mph.
+  * Wind Speed (mph) vs. Latitude
 
-  * Zero cloudiness.
+    ![Wind Speed vs. Latitude](Images/wind_speed.png)
 
-  * Drop any rows that don't contain all three conditions. You want to be sure the weather is ideal.
+    In here also, there is no relation between the latitude and the wind speed.
 
-  * **Note:** Feel free to adjust to your specifications but be sure to limit the number of rows returned by your API requests to a reasonable number.
+* By Hemispher
 
-* Using Google Places API to find the first hotel for each city located within 5000 meters of your coordinates.
+  * Temperature (C) vs. Latitude
 
-* Plot the hotels on top of the humidity heatmap with each pin containing the **Hotel Name**, **City**, and **Country**.
+    ![Southern Hemispher Max Temperature vs. Latitude](Images/south-max_temp.png) ![Northen Hemispher Max Temperature vs. Latitude](Images/north-max_temp.png)
 
-  ![hotel map](Images/hotel_map.png)
+    As we stated before, the temperatures drop as we get away from the Equator more pronounce in the northern hemisphere, probably due earth oval shape.
 
-As final considerations:
+  * Humidity (%) vs. Latitude
 
-* Create a new GitHub repository for this project called `API-Challenge` (note the kebab-case). **Do not add to an existing repo**
-* You must complete your analysis using a Jupyter notebook.
-* You must use the Matplotlib or Pandas plotting libraries.
-* For Part I, you must include a written description of three observable trends based on the data.
-* You must use proper labeling of your plots, including aspects like: Plot Titles (with date of analysis) and Axes Labels.
-* For max intensity in the heat map, try setting it to the highest humidity found in the data set.
+    ![Southern Hemispher Humidity vs. Latitude](Images/south-humidity.png) ![Northen Hemispher Humidity vs. Latitude](Images/north-humidity.png)
 
-## Hints and Considerations
+    The behaviour in both hemispheres are similar (mirroring), both with a +- 0.5 slope.
 
-* The city data you generate is based on random coordinates as well as different query times; as such, your outputs will not be an exact match to the provided starter notebook.
+  * Cloudiness (%) vs. Latitude
 
-* You may want to start this assignment by refreshing yourself on the [geographic coordinate system](http://desktop.arcgis.com/en/arcmap/10.3/guide-books/map-projections/about-geographic-coordinate-systems.htm).
+    ![Southern Hemispher Cloudiness vs. Latitude](Images/south-clouds.png) ![Northen Hemispher Cloudiness vs. Latitude](Images/north-clouds.png)
 
-* Next, spend the requisite time necessary to study the OpenWeatherMap API. Based on your initial study, you should be able to answer  basic questions about the API: Where do you request the API key? Which Weather API in particular will you need? What URL endpoints does it expect? What JSON structure does it respond with? Before you write a line of code, you should be aiming to have a crystal clear understanding of your intended outcome.
+    There seems to be a higher correlation between the southern hemisphere than in the northern hemisphere. And is notorious that both hemisphere behave similar instead of in a mirroring way as would be standard.
 
-* A starter code for Citipy has been provided. However, if you're craving an extra challenge, push yourself to learn how it works: [citipy Python library](https://pypi.python.org/pypi/citipy). Before you try to incorporate the library into your analysis, start by creating simple test cases outside your main script to confirm that you are using it correctly. Too often, when introduced to a new library, students get bogged down by the most minor of errors -- spending hours investigating their entire code -- when, in fact, a simple and focused test would have shown their basic utilization of the library was wrong from the start. Don't let this be you!
+  * Wind Speed (mph) vs. Latitude
 
-* Part of our expectation in this challenge is that you will use critical thinking skills to understand how and why we're recommending the tools we are. What is Citipy for? Why would you use it in conjunction with the OpenWeatherMap API? How would you do so?
+    ![Southern Hemispher Wind Speed vs. Latitude](Images/south-wind_speed.png) ![Northen Hemispher Wind Speed vs. Latitude](Images/north-wind_speed.png)
 
-* In building your script, pay attention to the cities you are using in your query pool. Are you getting coverage of the full gamut of latitudes and longitudes? Or are you simply choosing 500 cities concentrated in one region of the world? Even if you were a geographic genius, simply rattling 500 cities based on your human selection would create a biased dataset. Be thinking of how you should counter this. (Hint: Consider the full range of latitudes).
+    There seems to be no significant correlation between the latitude and the wind speed.
 
-* Once you have computed the linear regression for one chart, the process will be similar for all others. As a bonus, try to create a function that will create these charts based on different parameters.
+* HeatMap with `gmaps`
 
-* Remember that each coordinate will trigger a separate call to the Google API. If you're creating your own criteria to plan your vacation, try to reduce the results in your DataFrame to 10 or fewer cities.
+  ![HeatMap with % humidity](Images/heatmap.png)
 
-* Lastly, remember -- this is a challenging activity. Push yourself! If you complete this task, then you can safely say that you've gained a strong mastery of the core foundations of data analytics and it will only go better from here. Good luck!
+* Map with hotesl for the cities with ideal weather.
+
+  ![Map with % humidity and hotels](Images/hotelmap.png)
 
 ### Copyright
 
-Trilogy Education Services © 2019. All Rights Reserved.
+Trilogy Education Services © 2019. All Rights Reserved. First image retrived from OpenWeatherMap site on 07/08/2020.

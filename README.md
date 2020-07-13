@@ -88,4 +88,4 @@ Create an ideal weather and
 
 ### Copyright
 
-Trilogy Education Services © 2019. All Rights Reserved. First image retrived from OpenWeatherMap site on 07/08/2020.
+First image retrived from OpenWeatherMap site on 07/08/2020.
